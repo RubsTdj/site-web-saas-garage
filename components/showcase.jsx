@@ -53,7 +53,7 @@ function Problems() {
 
         <div className="problems-grid">
           {items.map((p, i) => (
-            <div key={i} className="reveal card" style={{ padding: 24, transitionDelay: `${i*0.05}s`, display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div key={i} className="reveal card card-tilt" style={{ padding: 24, transitionDelay: `${i*0.05}s`, display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{
                 width: 38, height: 38, borderRadius: 10,
                 background: 'color-mix(in oklab, var(--accent) 12%, transparent)',
@@ -128,9 +128,9 @@ function AutoRDVKiller() {
     },
     {
       id: 3,
-      tag: 'SMS automatique',
-      title: 'E-mail envoyé au client',
-      icon: <SPhone size={16} />,
+      tag: 'Mail automatique',
+      title: 'Mail envoyé au client',
+      icon: <SMail size={16} />,
       sub: "Le client reçoit un mail personnalisé l'invitant à réserver son créneau de pose.",
       detail: {
         sms: "Bonjour Sophie 👋 Vos pneus Michelin Road 6 sont arrivés à l'atelier. Réservez votre créneau de pose en 2 clics : meca.no/r/k4j2",
@@ -179,13 +179,13 @@ function AutoRDVKiller() {
               Le RDV pris <span style={{ color: 'var(--accent)' }}>automatiquement.</span>
             </h2>
             <p style={{ color: 'var(--muted)', fontSize: 17, marginBottom: 22, maxWidth: 480 }}>
-              Mecanova se branche sur vos e-mails Allopneu et 1001Pneus. Dès qu'une livraison est confirmée, un SMS part automatiquement au client pour qu'il réserve son créneau de pose. <b style={{ color: 'var(--fg)', fontWeight: 500 }}>Zéro action de votre part.</b>
+              Mecanova se branche sur vos e-mails Allopneu et 1001Pneus. Dès qu'une livraison est confirmée, un mail part automatiquement au client pour qu'il réserve son créneau de pose. <b style={{ color: 'var(--fg)', fontWeight: 500 }}>Zéro action de votre part.</b>
             </p>
 
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 'Fonctionne avec Allopneu, 1001Pneus & vos boîtes mail',
-                'Personnalisation du message SMS envoyé',
+                'Personnalisation du message mail envoyé',
                 "Le RDV apparaît directement dans votre agenda",
                 'Relance automatique si le client ne répond pas',
               ].map((x, i) => (
@@ -253,7 +253,7 @@ function AutoRDVKiller() {
                           </div>
                         )}
                         {s.id === 3 && (
-                          <div className="sms-bubble">{s.detail.sms}</div>
+                          <div className="mail-bubble">{s.detail.sms}</div>
                         )}
                         {s.id === 4 && (
                           <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13 }}>
@@ -340,7 +340,7 @@ function AutoRDVKiller() {
           border: 1px solid var(--line); border-radius: 10px;
           background: color-mix(in oklab, var(--bg) 50%, transparent);
         }
-        .sms-bubble {
+        .mail-bubble {
           background: color-mix(in oklab, var(--accent) 14%, transparent);
           border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
           padding: 11px 14px; border-radius: 14px 14px 14px 4px;
@@ -383,6 +383,11 @@ function FeaturesGrid() {
     Analytique: ['rgba(236,72,153,.14)', '#DB2777'],
   };
 
+  React.useEffect(() => {
+    if (window._initTilt) window._initTilt();
+    if (window._initCounters) window._initCounters();
+  });
+
   return (
     <section id="features" style={{ padding: '120px 0' }}>
       <div className="container">
@@ -398,7 +403,7 @@ function FeaturesGrid() {
           {items.map((it, i) => {
             const [bg, fg] = tagColors[it.tag] || ['rgba(0,0,0,.06)', 'var(--fg)'];
             return (
-              <div key={i} className="reveal card feature-card" style={{ padding: 28, transitionDelay: `${i * 0.04}s` }}>
+              <div key={i} className="reveal card feature-card card-tilt" style={{ padding: 28, transitionDelay: `${i * 0.04}s` }}>
                 <div style={{ display: 'inline-flex', padding: '4px 10px', borderRadius: 999, background: bg, color: fg, fontSize: 11, fontWeight: 500, fontFamily: 'Geist Mono, monospace', letterSpacing: '.02em', marginBottom: 20 }}>
                   {it.tag}
                 </div>
@@ -611,6 +616,11 @@ function DashboardInterne() {
     { icon: <SUsers size={15} />, t: "CRM client intégré", d: "Historique, notes, préférences, relances programmées. Fidélisez sans effort." },
     { icon: <SChart size={15} />, t: "Reporting complet", d: "CA, marges, performance par technicien. Les chiffres qui font grandir." },
   ];
+
+  React.useEffect(() => {
+    if (window._initTilt) window._initTilt();
+    if (window._initCounters) window._initCounters();
+  });
 
   return (
     <section id="dashboard" style={{ padding: '120px 0', background: '#0A0F0D', color: '#F2F4F2' }}>
@@ -833,7 +843,7 @@ function Onboarding() {
 
         <div className="onboarding-grid">
           {steps.map((s, i) => (
-            <div key={i} className="reveal card onb-card" style={{ padding: 28, transitionDelay: `${i*0.08}s`, position: 'relative' }}>
+            <div key={i} className="reveal card onb-card card-tilt" style={{ padding: 28, transitionDelay: `${i*0.08}s`, position: 'relative' }}>
               <div className="onb-num">{String(i+1).padStart(2, '0')}</div>
               <div style={{
                 width: 44, height: 44, borderRadius: 11,

@@ -105,16 +105,96 @@
 
   .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
 
-  /* Reveal animations */
+  /* Reveal animations — blur + scale + slide */
   [data-anim="on"] .reveal {
-    opacity: 0; transform: translateY(16px);
-    transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+    filter: blur(6px);
+    transition: opacity .75s cubic-bezier(.16,1,.3,1),
+                transform .75s cubic-bezier(.16,1,.3,1),
+                filter .75s cubic-bezier(.16,1,.3,1);
   }
-  [data-anim="on"] .reveal.in { opacity: 1; transform: none; }
+  [data-anim="on"] .reveal.in { opacity: 1; transform: none; filter: blur(0); }
   [data-anim="on"] .reveal-delay-1 { transition-delay: .08s; }
   [data-anim="on"] .reveal-delay-2 { transition-delay: .16s; }
-  [data-anim="on"] .reveal-delay-3 { transition-delay: .24s; }
-  [data-anim="on"] .reveal-delay-4 { transition-delay: .32s; }
+  [data-anim="on"] .reveal-delay-3 { transition-delay: .25s; }
+  [data-anim="on"] .reveal-delay-4 { transition-delay: .34s; }
+
+  /* Animated gradient blobs */
+  @keyframes blob1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(40px,-40px) scale(1.08); }
+    66% { transform: translate(-30px,25px) scale(0.94); }
+  }
+  @keyframes blob2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    40% { transform: translate(-50px,30px) scale(1.06); }
+    70% { transform: translate(35px,-20px) scale(0.96); }
+  }
+  .blob {
+    position: fixed; pointer-events: none; z-index: 0;
+    border-radius: 50%; filter: blur(80px);
+  }
+  .blob-1 {
+    width: 600px; height: 600px;
+    top: -100px; right: -100px;
+    background: radial-gradient(circle, color-mix(in oklab, var(--accent) 14%, transparent), transparent 70%);
+    animation: blob1 12s ease-in-out infinite;
+  }
+  .blob-2 {
+    width: 500px; height: 500px;
+    bottom: 200px; left: -80px;
+    background: radial-gradient(circle, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%);
+    animation: blob2 16s ease-in-out infinite;
+  }
+  #app { position: relative; z-index: 1; }
+
+  /* Shimmer on primary buttons */
+  @keyframes btn-shimmer {
+    0% { background-position: -300% 0; }
+    100% { background-position: 300% 0; }
+  }
+  .btn-primary {
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.2) 50%, transparent 60%);
+    background-size: 300% 100%;
+    animation: btn-shimmer 3.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Gradient text animation on .text-glow */
+  @keyframes glow-shift {
+    0%,100% { filter: drop-shadow(0 0 8px color-mix(in oklab, var(--accent) 60%, transparent)); }
+    50% { filter: drop-shadow(0 0 20px color-mix(in oklab, var(--accent) 90%, transparent)); }
+  }
+
+  /* Card tilt — enhanced hover */
+  .card-tilt {
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    transform-style: preserve-3d;
+  }
+  .card-tilt:hover {
+    border-color: color-mix(in oklab, var(--accent) 35%, var(--line));
+    box-shadow: 0 20px 60px rgba(0,0,0,.18), 0 0 0 1px color-mix(in oklab, var(--accent) 15%, transparent);
+  }
+
+  /* Scroll progress bar */
+  #scroll-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--accent); z-index: 999;
+    width: 0%; transition: width .1s linear;
+    box-shadow: 0 0 8px color-mix(in oklab, var(--accent) 80%, transparent);
+  }
+
+  /* Counter number animation */
+  .count-num {
+    display: inline-block;
+    transition: transform .3s ease;
+  }
 
   /* Buttons */
   .btn {
@@ -217,6 +297,9 @@
 </head>
 <body data-variant="pilote" data-density="regular" data-anim="on" data-font="geist">
 
+<div id="scroll-bar"></div>
+<div class="blob blob-1" aria-hidden="true"></div>
+<div class="blob blob-2" aria-hidden="true"></div>
 <div id="app"></div>
 
 <!-- React + Babel -->
@@ -224,6 +307,61 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
+<script>
+/* ── Scroll progress bar ── */
+(function() {
+  const bar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (window.scrollY / total * 100) + '%';
+  }, { passive: true });
+})();
+
+/* ── Counter animation ── */
+function animateCounter(el, target, duration) {
+  let start = null;
+  const step = (ts) => {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const cur = Math.round(ease * target);
+    el.textContent = cur.toLocaleString('fr-FR');
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+window._initCounters = function() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+    const target = parseInt(el.dataset.count, 10);
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { animateCounter(el, target, 1200); io.disconnect(); }
+    }, { threshold: .5 });
+    io.observe(el);
+  });
+};
+
+/* ── 3D tilt on cards ── */
+function addTilt(el) {
+  el.addEventListener('mousemove', (e) => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    el.style.transform = `perspective(800px) rotateX(${-y*6}deg) rotateY(${x*6}deg) translateY(-3px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = '';
+  });
+}
+window._initTilt = function() {
+  document.querySelectorAll('.card-tilt').forEach(el => {
+    if (el.dataset.tilt) return;
+    el.dataset.tilt = '1';
+    addTilt(el);
+  });
+};
+</script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="components/icons.jsx"></script>
 <script type="text/babel" src="components/dashboard.jsx"></script>

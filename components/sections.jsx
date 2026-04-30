@@ -197,7 +197,13 @@ function HeroVisual({ variant }) {
         filter: 'blur(32px)', pointerEvents: 'none', zIndex: 0,
       }} />
       {/* sizer ref */}
-      <div ref={outerRef} style={{ width: '100%', position: 'relative', zIndex: 1 }}>
+      <div ref={outerRef} style={{ width: '100%', position: 'relative', zIndex: 1, animation: 'hero-float 6s ease-in-out infinite' }}>
+        <style>{`
+          @keyframes hero-float {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+          }
+        `}</style>
         <div style={{
           position: 'relative',
           width: '100%',
@@ -223,10 +229,17 @@ function HeroVisual({ variant }) {
             fontFamily: 'Geist Mono, monospace', fontSize: 10,
             display: 'inline-flex', alignItems: 'center', gap: 5,
             boxShadow: '0 4px 14px rgba(15,184,154,.4)',
+            animation: 'badge-glow 3s ease-in-out infinite',
           }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#fff', animation: 'pulse 2s infinite' }} />
             En direct · Atelier
           </div>
+          <style>{`
+            @keyframes badge-glow {
+              0%,100% { box-shadow: 0 4px 14px rgba(15,184,154,.4); }
+              50% { box-shadow: 0 4px 24px rgba(15,184,154,.75), 0 0 40px rgba(15,184,154,.2); }
+            }
+          `}</style>
         </div>
       </div>
     </div>
@@ -236,10 +249,13 @@ function HeroVisual({ variant }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // FINAL CTA
 function FinalCTA() {
+  React.useEffect(() => {
+    if (window._initTilt) window._initTilt();
+  });
   return (
     <section id="demo" style={{ padding: '0 0 120px' }}>
       <div className="container">
-        <div className="reveal cta-card">
+        <div className="reveal cta-card card-tilt">
           <div style={{ position: 'relative', zIndex: 2 }}>
             <div className="eyebrow" style={{ marginBottom: 18, color: 'rgba(255,255,255,.6)' }}>Démo en 20 minutes</div>
             <h2 style={{ color: '#fff', maxWidth: 640, marginBottom: 20 }}>
