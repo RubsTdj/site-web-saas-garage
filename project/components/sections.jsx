@@ -9,6 +9,8 @@ const { Calendar, Key, Clipboard, Receipt, Users, Spark, Bolt,
 // ─────────────────────────────────────────────────────────────────────────────
 // NAV
 function Nav({ t, variant }) {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 60,
@@ -20,7 +22,7 @@ function Nav({ t, variant }) {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         height: 68
       }}>
-        <a href="#" style={{ display: 'flex', alignItems: 'center', marginRight: 32 }}>
+        <a href="index.html" style={{ display: 'flex', alignItems: 'center', marginRight: 32 }}>
           <IconLogoWordmark height={30} />
         </a>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 24, fontSize: 14, color: 'var(--muted)', flex: 1 }} className="nav-links">
@@ -30,13 +32,62 @@ function Nav({ t, variant }) {
           <a href="#dashboard">Dashboard</a>
           <a href="features.html">Fonctionnalités</a>
         </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div className="nav-actions" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <a className="btn btn-ghost" href="#" style={{ padding: '9px 14px', fontSize: 13 }}>Connexion</a>
-          <a className="btn btn-primary" href="#demo" style={{ padding: '10px 16px', fontSize: 13.5 }}>Démo gratuite</a>
+          <a className="btn btn-primary" href="contact.html" style={{ padding: '10px 16px', fontSize: 13.5 }}>Démo gratuite</a>
         </div>
+        <button
+          className="nav-burger"
+          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(o => !o)}
+          style={{
+            display: 'none', background: 'transparent', border: 'none',
+            cursor: 'pointer', padding: 8, color: 'var(--fg)',
+          }}
+        >
+          {menuOpen
+            ? <X size={22} />
+            : <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><line x1="2" y1="6" x2="20" y2="6"/><line x1="2" y1="11" x2="20" y2="11"/><line x1="2" y1="16" x2="20" y2="16"/></svg>
+          }
+        </button>
       </div>
+
+      {/* Mobile drawer */}
+      {menuOpen && (
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, right: 0,
+          background: 'color-mix(in oklab, var(--bg) 96%, transparent)',
+          borderBottom: '1px solid var(--line)',
+          backdropFilter: 'blur(14px)',
+          padding: '16px 24px 24px',
+          display: 'flex', flexDirection: 'column', gap: 4,
+        }}>
+          {[
+            { label: 'Problèmes', href: '#problemes' },
+            { label: 'Auto-RDV pneus', href: '#auto-rdv' },
+            { label: 'Portail client', href: '#portail' },
+            { label: 'Dashboard', href: '#dashboard' },
+            { label: 'Fonctionnalités', href: 'features.html' },
+          ].map(({ label, href }) => (
+            <a key={href} href={href} onClick={() => setMenuOpen(false)} style={{
+              padding: '11px 4px', fontSize: 15, color: 'var(--fg)',
+              borderBottom: '1px solid var(--line)',
+            }}>{label}</a>
+          ))}
+          <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
+            <a className="btn btn-ghost" href="#" style={{ flex: 1, justifyContent: 'center' }}>Connexion</a>
+            <a className="btn btn-primary" href="contact.html" style={{ flex: 1, justifyContent: 'center' }}>Démo gratuite</a>
+          </div>
+        </div>
+      )}
+
       <style>{`
-        @media (max-width: 880px) { .nav-links { display: none !important; } }
+        @media (max-width: 880px) {
+          .nav-links { display: none !important; }
+          .nav-actions { display: none !important; }
+          .nav-burger { display: flex !important; }
+        }
       `}</style>
     </header>);
 
@@ -198,10 +249,10 @@ function FinalCTA() {
               Migration de vos données et formation incluses. On vous montre Mecanova en direct sur votre cas concret — 20 minutes, avec un garagiste de l'équipe.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a className="btn btn-primary" href="#" style={{ padding: '14px 20px', fontSize: 15 }}>
+              <a className="btn btn-primary" href="contact.html" style={{ padding: '14px 20px', fontSize: 15 }}>
                 Réserver une démo <ArrowRight size={16} />
               </a>
-              <a className="btn" href="#" style={{ padding: '14px 20px', fontSize: 15, color: '#fff', border: '1px solid rgba(255,255,255,.2)' }}>
+              <a className="btn" href="contact.html" style={{ padding: '14px 20px', fontSize: 15, color: '#fff', border: '1px solid rgba(255,255,255,.2)' }}>
                 Voir une démo en 90s
               </a>
             </div>
@@ -266,7 +317,7 @@ function Footer() {
             <a className="footer-l" href="#">À propos</a>
             <a className="footer-l" href="#">Blog atelier</a>
             <a className="footer-l" href="#">Recrutement</a>
-            <a className="footer-l" href="#">Contact</a>
+            <a className="footer-l" href="contact.html">Contact</a>
           </div>
           <div>
             <div className="footer-h">Ressources</div>

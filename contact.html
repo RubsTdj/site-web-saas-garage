@@ -3,8 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Réserver une démo — Mecanova</title>
+<title>Réserver une démo gratuite — Mecanova</title>
 <link rel="icon" type="image/png" href="uploads/Favicon 32x32.png">
+<link rel="canonical" href="https://rubstdj.github.io/site-web-saas-garage/contact.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rubstdj.github.io/site-web-saas-garage/contact.html">
+<meta property="og:title" content="Réserver une démo — Mecanova">
+<meta property="og:description" content="20 minutes avec un garagiste de l'équipe. On vous montre Mecanova en live, sur votre cas concret.">
+<meta property="og:image" content="https://rubstdj.github.io/site-web-saas-garage/uploads/og-mecanova.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Mecanova">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Réserver une démo — Mecanova">
+<meta name="twitter:description" content="20 minutes avec un garagiste de l'équipe. Migration incluse, sans engagement.">
+<meta name="twitter:image" content="https://rubstdj.github.io/site-web-saas-garage/uploads/og-mecanova.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -242,31 +258,33 @@
       <p class="form-title">Réservez votre démo</p>
       <p class="form-sub">Réponse sous 24h. Aucun spam.</p>
 
-      <form id="demo-form" onsubmit="handleSubmit(event)">
+      <!-- Formspree : créez un compte sur formspree.io et remplacez YOUR_FORM_ID -->
+      <form id="demo-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="_subject" value="Nouvelle demande de démo Mecanova">
         <div class="form-grid">
           <div class="field">
             <label for="prenom">Prénom</label>
-            <input id="prenom" type="text" placeholder="Jean" required>
+            <input id="prenom" name="prenom" type="text" placeholder="Jean" autocomplete="given-name" required>
           </div>
           <div class="field">
             <label for="nom">Nom</label>
-            <input id="nom" type="text" placeholder="Dupont" required>
+            <input id="nom" name="nom" type="text" placeholder="Dupont" autocomplete="family-name" required>
           </div>
           <div class="field full">
             <label for="garage">Nom du garage</label>
-            <input id="garage" type="text" placeholder="Moto Passion Paris" required>
+            <input id="garage" name="garage" type="text" placeholder="Moto Passion Paris" autocomplete="organization" required>
           </div>
           <div class="field full">
             <label for="email">Email professionnel</label>
-            <input id="email" type="email" placeholder="jean@motopassion.fr" required>
+            <input id="email" name="email" type="email" placeholder="jean@motopassion.fr" autocomplete="email" required>
           </div>
           <div class="field full">
             <label for="tel">Téléphone</label>
-            <input id="tel" type="tel" placeholder="06 12 34 56 78">
+            <input id="tel" name="tel" type="tel" placeholder="06 12 34 56 78" autocomplete="tel">
           </div>
           <div class="field full">
             <label for="logiciel">Logiciel actuel</label>
-            <select id="logiciel">
+            <select id="logiciel" name="logiciel">
               <option value="">Sélectionner…</option>
               <option>Aucun — tout sur papier / Excel</option>
               <option>Garage Manager</option>
@@ -277,7 +295,7 @@
           </div>
           <div class="field full">
             <label for="message">Un mot sur votre atelier <span style="color:var(--muted);font-weight:400;">(optionnel)</span></label>
-            <textarea id="message" placeholder="Nombre de mécaniciens, volume RDV mensuel, besoin principal…"></textarea>
+            <textarea id="message" name="message" placeholder="Nombre de mécaniciens, volume RDV mensuel, besoin principal…"></textarea>
           </div>
         </div>
 
@@ -316,8 +334,8 @@ function handleSubmit(e) {
 </script>
 
 <!-- React Nav -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script type="text/babel" src="components/icons.jsx"></script>
 <script type="text/babel" src="components/sections.jsx"></script>

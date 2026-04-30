@@ -5,6 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mecanova — Le logiciel des garages moto qui en ont marre du téléphone</title>
 <meta name="description" content="Mecanova est le logiciel tout-en-un des garages moto : prise de RDV en ligne, facturation, pré-contrôle technique, gardiennage et marketing automatisé. Concentrez-vous sur la mécanique.">
+<link rel="canonical" href="https://rubstdj.github.io/site-web-saas-garage/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rubstdj.github.io/site-web-saas-garage/">
+<meta property="og:title" content="Mecanova — Pilotez votre garage sans quitter la piste.">
+<meta property="og:description" content="Un seul logiciel, zéro cambouis. Prise de RDV automatisée, suivi commandes pneus, portail client, facturation. Conçu pour les garages moto.">
+<meta property="og:image" content="https://rubstdj.github.io/site-web-saas-garage/uploads/og-mecanova.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Mecanova">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mecanova — Pilotez votre garage sans quitter la piste.">
+<meta name="twitter:description" content="Un seul logiciel, zéro cambouis. RDV automatisés, suivi pneus, portail client, facturation.">
+<meta name="twitter:image" content="https://rubstdj.github.io/site-web-saas-garage/uploads/og-mecanova.jpg">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Mecanova",
+  "url": "https://rubstdj.github.io/site-web-saas-garage/",
+  "description": "Logiciel de gestion tout-en-un pour garages moto. Prise de RDV en ligne, facturation, suivi commandes pneus Allopneu et 1001Pneus, portail client.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "fr-FR",
+  "offers": {
+    "@type": "Offer",
+    "description": "Démo gratuite sur demande",
+    "priceCurrency": "EUR"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mecanova",
+    "url": "https://rubstdj.github.io/site-web-saas-garage/"
+  }
+}
+</script>
 
 <link rel="icon" type="image/png" href="uploads/Favicon 32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +121,7 @@
     display: inline-flex; align-items: center; gap: 8px;
     padding: 13px 18px; border-radius: 10px;
     font-weight: 500; font-size: 14.5px;
-    border: 1px solid transparent; cursor: default;
+    border: 1px solid transparent; cursor: pointer;
     transition: transform .15s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
     white-space: nowrap;
   }
@@ -149,6 +191,14 @@
   }
   [data-variant="workshop"] h1 { font-size: clamp(48px, 8vw, 120px); line-height: 0.95; }
 
+  /* Focus visible — keyboard navigation */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  :focus:not(:focus-visible) { outline: none; }
+
   /* Hidden utility */
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
@@ -170,8 +220,8 @@
 <div id="app"></div>
 
 <!-- React + Babel -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script type="text/babel" src="tweaks-panel.jsx"></script>
