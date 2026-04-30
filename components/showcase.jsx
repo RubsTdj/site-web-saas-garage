@@ -760,8 +760,6 @@ function Integrations() {
           <IntegrationLogo name="Allopneu" sub="Intégration native" native />
           <IntegrationLogo name="1001Pneus" sub="Intégration native" native />
           <IntegrationLogo name="Boîte mail" sub="Compatible IMAP" />
-          <IntegrationLogo name="Stripe" sub="Paiement en ligne" />
-          <IntegrationLogo name="Google Cal" sub="Synchro agenda" />
           <IntegrationLogo name="Comptabilité" sub="Export FEC / Sage" />
         </div>
         <div className="reveal" style={{ textAlign: 'center', marginTop: 22, color: 'var(--muted)', fontSize: 13.5 }}>
@@ -770,9 +768,9 @@ function Integrations() {
       </div>
       <style>{`
         .integrations-row {
-          display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+          display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
         }
-        @media (max-width: 900px) { .integrations-row { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px) { .integrations-row { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 520px) { .integrations-row { grid-template-columns: repeat(2, 1fr); } }
       `}</style>
     </section>
