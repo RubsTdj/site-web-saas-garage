@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mecanova — Le logiciel des garages moto qui en ont marre du téléphone</title>
+<meta name="description" content="Mecanova est le logiciel tout-en-un des garages moto : prise de RDV en ligne, facturation, pré-contrôle technique, gardiennage et marketing automatisé. Concentrez-vous sur la mécanique.">
+
+<link rel="icon" type="image/png" href="uploads/Favicon 32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --accent: #0FB89A;
+    --accent-2: #FF6B35;
+    --bg: #FAFAF7;
+    --fg: #0E1411;
+    --muted: rgba(14,20,17,.60);
+    --line: rgba(14,20,17,.10);
+    --card: #FFFFFF;
+    --shadow: 0 1px 2px rgba(14,20,17,.04), 0 8px 32px rgba(14,20,17,.06);
+    --radius: 14px;
+    --container: 1200px;
+    --pad: 28px;
+  }
+  [data-variant="pilote"] {
+    --bg: #0A0F0D;
+    --fg: #F2F4F2;
+    --muted: rgba(242,244,242,.62);
+    --line: rgba(242,244,242,.12);
+    --card: #11181A;
+    --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 12px 40px rgba(0,0,0,.5);
+  }
+  [data-variant="workshop"] {
+    --bg: #F4EFE6;
+    --fg: #1A1612;
+    --muted: rgba(26,22,18,.62);
+    --line: rgba(26,22,18,.14);
+    --card: #FBF7EE;
+  }
+  [data-density="compact"] { --pad: 18px; }
+  [data-density="comfy"]   { --pad: 40px; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+    transition: background-color .3s ease, color .3s ease;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .mono { font-family: 'Geist Mono', ui-monospace, monospace; }
+  .serif { font-family: 'Instrument Serif', 'Times New Roman', serif; font-weight: 400; }
+
+  .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+
+  /* Reveal animations */
+  [data-anim="on"] .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  [data-anim="on"] .reveal.in { opacity: 1; transform: none; }
+  [data-anim="on"] .reveal-delay-1 { transition-delay: .08s; }
+  [data-anim="on"] .reveal-delay-2 { transition-delay: .16s; }
+  [data-anim="on"] .reveal-delay-3 { transition-delay: .24s; }
+  [data-anim="on"] .reveal-delay-4 { transition-delay: .32s; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 18px; border-radius: 10px;
+    font-weight: 500; font-size: 14.5px;
+    border: 1px solid transparent; cursor: default;
+    transition: transform .15s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 4px 14px color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 8px 22px color-mix(in oklab, var(--accent) 45%, transparent); }
+  .btn-ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+  .btn-ghost:hover { background: color-mix(in oklab, var(--fg) 5%, transparent); }
+  .btn-dark { background: var(--fg); color: var(--bg); }
+  .btn-dark:hover { transform: translateY(-1px); }
+
+  /* Tags / chips */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; border-radius: 999px;
+    font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: .04em;
+    background: color-mix(in oklab, var(--accent) 12%, transparent);
+    color: var(--accent);
+    border: 1px solid color-mix(in oklab, var(--accent) 22%, transparent);
+  }
+  .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+
+  /* Headings */
+  h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.05; margin: 0; font-weight: 500; text-wrap: balance; }
+  h1 { font-size: clamp(40px, 6.4vw, 84px); }
+  h2 { font-size: clamp(32px, 4.4vw, 56px); }
+  h3 { font-size: 19px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; }
+  p  { text-wrap: pretty; }
+
+  /* Section meta */
+  .eyebrow {
+    font-family: 'Geist Mono', monospace; text-transform: uppercase;
+    font-size: 11px; letter-spacing: .12em; color: var(--muted);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ""; width: 22px; height: 1px; background: currentColor; opacity: .6;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* Pilote variant flourishes */
+  [data-variant="pilote"] .btn-primary {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent),
+                0 0 28px color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  [data-variant="pilote"] .chip {
+    background: color-mix(in oklab, var(--accent) 14%, transparent);
+    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  [data-variant="pilote"] body { background-image:
+    radial-gradient(1200px 600px at 80% -10%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, color-mix(in oklab, var(--accent) 6%, transparent), transparent 60%);
+  }
+
+  /* Workshop variant editorial */
+  [data-variant="workshop"] h1, [data-variant="workshop"] h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  [data-variant="workshop"] h1 { font-size: clamp(48px, 8vw, 120px); line-height: 0.95; }
+
+  /* Hidden utility */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  #app { min-height: 100vh; }
+
+  /* Marquee for the trust bar */
+  .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .marquee-track { display: flex; gap: 64px; width: max-content; animation: scroll 40s linear infinite; }
+  [data-anim="off"] .marquee-track { animation: none; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Apply tweak font */
+  body[data-font="geist"]  { font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; }
+  body[data-font="serif"]  { font-family: 'Instrument Serif', 'Times New Roman', serif; }
+</style>
+</head>
+<body data-variant="pilote" data-density="regular" data-anim="on" data-font="geist">
+
+<div id="app"></div>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="components/icons.jsx"></script>
+<script type="text/babel" src="components/dashboard.jsx"></script>
+<script type="text/babel" src="components/sections.jsx"></script>
+<script type="text/babel" src="components/showcase.jsx"></script>
+<script type="text/babel" src="landing.jsx"></script>
+
+</body>
+</html>
