@@ -188,11 +188,10 @@
 <section class="hero">
   <div class="container reveal">
     <div class="chip">Lecture · 4 min</div>
-    <h1>Toutes les fonctions de l'atelier.<br><em class="serif" style="font-style:italic;color:var(--accent);">Aucune ne reste sur le carreau.</em></h1>
+    <h1>Toutes les fonctions de l'atelier.<br><span style="color:var(--accent);">Aucune ne reste sur le carreau.</span></h1>
     <p class="lead">Mecanova couvre l'intégralité du flux d'un garage moto, du premier RDV pneu jusqu'à la facture archivée. Pas de modules à acheter, pas de plug-ins à brancher : tout est inclus, dès le premier jour.</p>
     <div class="actions">
       <a class="btn btn-primary" href="contact.html">Demander une démo →</a>
-      <a class="btn btn-ghost" href="index.html">Retour à l'accueil</a>
     </div>
   </div>
 </section>
@@ -550,7 +549,6 @@
         <p style="color:rgba(255,255,255,.7);font-size:17px;margin-bottom:28px;">On vous montre Mecanova en live, sur votre cas concret. Migration de vos données comprise, formation incluse.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <a class="btn btn-primary" href="contact.html" style="padding:14px 20px;font-size:15px;">Réserver une démo →</a>
-          <a class="btn" href="index.html" style="padding:14px 20px;font-size:15px;color:#fff;border:1px solid rgba(255,255,255,.2);">Retour à l'accueil</a>
         </div>
       </div>
     </div>
@@ -637,20 +635,6 @@
     }
     .reveal.in { opacity: 1; transform: none; filter: blur(0); }
 
-    /* Shimmer on primary buttons */
-    .btn-primary { position: relative; overflow: hidden; }
-    .btn-primary::after {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
-      background-size: 300% 100%;
-      animation: btn-shimmer 3.5s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes btn-shimmer {
-      0% { background-position: -300% 0; }
-      100% { background-position: 300% 0; }
-    }
 
     /* Card tilt hover */
     .visual {

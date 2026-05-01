@@ -149,22 +149,6 @@
   }
   #app { position: relative; z-index: 1; }
 
-  /* Shimmer on primary buttons */
-  @keyframes btn-shimmer {
-    0% { background-position: -300% 0; }
-    100% { background-position: 300% 0; }
-  }
-  .btn-primary {
-    position: relative; overflow: hidden;
-  }
-  .btn-primary::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.2) 50%, transparent 60%);
-    background-size: 300% 100%;
-    animation: btn-shimmer 3.5s ease-in-out infinite;
-    pointer-events: none;
-  }
 
   /* Gradient text animation on .text-glow */
   @keyframes glow-shift {

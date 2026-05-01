@@ -11,6 +11,18 @@ const { Calendar, Key, Clipboard, Receipt, Users, Spark, Bolt,
 function Nav({ t, variant }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
+  // Detect if we're on features.html or contact.html so anchor links go back to index
+  const isHome = !window.location.pathname.match(/features|contact/);
+  const href = (anchor) => isHome ? anchor : `index.html${anchor}`;
+
+  const navLinks = [
+    { label: 'Problèmes',      href: href('#problemes') },
+    { label: 'Auto-RDV pneus', href: href('#auto-rdv') },
+    { label: 'Portail client', href: href('#portail') },
+    { label: 'Dashboard',      href: href('#dashboard') },
+    { label: 'Fonctionnalités', href: 'features.html', active: window.location.pathname.includes('features') },
+  ];
+
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 60,
@@ -26,11 +38,9 @@ function Nav({ t, variant }) {
           <IconLogoWordmark height={30} />
         </a>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 24, fontSize: 14, color: 'var(--muted)', flex: 1 }} className="nav-links">
-          <a href="#problemes">Problèmes</a>
-          <a href="#auto-rdv">Auto-RDV pneus</a>
-          <a href="#portail">Portail client</a>
-          <a href="#dashboard">Dashboard</a>
-          <a href="features.html">Fonctionnalités</a>
+          {navLinks.map(({ label, href, active }) => (
+            <a key={label} href={href} style={{ color: active ? 'var(--accent)' : 'inherit' }}>{label}</a>
+          ))}
         </nav>
         <div className="nav-actions" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <a className="btn btn-ghost" href="#" style={{ padding: '9px 14px', fontSize: 13 }}>Connexion</a>
@@ -63,15 +73,10 @@ function Nav({ t, variant }) {
           padding: '16px 24px 24px',
           display: 'flex', flexDirection: 'column', gap: 4,
         }}>
-          {[
-            { label: 'Problèmes', href: '#problemes' },
-            { label: 'Auto-RDV pneus', href: '#auto-rdv' },
-            { label: 'Portail client', href: '#portail' },
-            { label: 'Dashboard', href: '#dashboard' },
-            { label: 'Fonctionnalités', href: 'features.html' },
-          ].map(({ label, href }) => (
-            <a key={href} href={href} onClick={() => setMenuOpen(false)} style={{
-              padding: '11px 4px', fontSize: 15, color: 'var(--fg)',
+          {navLinks.map(({ label, href, active }) => (
+            <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{
+              padding: '11px 4px', fontSize: 15,
+              color: active ? 'var(--accent)' : 'var(--fg)',
               borderBottom: '1px solid var(--line)',
             }}>{label}</a>
           ))}
