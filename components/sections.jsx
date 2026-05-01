@@ -13,7 +13,7 @@ function Nav({ t, variant }) {
 
   // Detect if we're on features.html or contact.html so anchor links go back to index
   const isHome = !window.location.pathname.match(/features|contact/);
-  const href = (anchor) => isHome ? anchor : `index.html${anchor}`;
+  const href = (anchor) => isHome ? anchor : `/${anchor}`;
 
   const navLinks = [
     { label: 'Problèmes',      href: href('#problemes') },
