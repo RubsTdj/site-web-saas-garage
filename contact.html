@@ -37,7 +37,7 @@
     --radius: 14px;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }
   body {
     background: var(--bg); color: var(--fg);
     font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
@@ -74,7 +74,7 @@
   /* Layout */
   .page {
     flex: 1;
-    overflow: hidden;
+    min-height: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
@@ -93,6 +93,7 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
+    min-height: 0;
   }
   .page-left::before {
     content: "";
@@ -135,8 +136,9 @@
     padding: 48px 56px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-y: auto;
+    min-height: 0;
   }
   @media (max-width: 860px) { .page-right { padding: 32px 24px; } }
 

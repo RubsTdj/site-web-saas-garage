@@ -169,7 +169,6 @@ function Hero({ t, variant }) {
       <style>{`
         @media (max-width: 860px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .hero-visual { order: -1; }
         }
       `}</style>
     </section>);
